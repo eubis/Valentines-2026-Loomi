@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💙</title>
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --coral: #FF6B9D;
+            --ocean-deep: #0A4D68;
+            --ocean-light: #088395;
+            --sand: #FFE5B4;
+            --sunset: #FF9A76;
+            --shell: #FFF5E4;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(180deg, #0A4D68 0%, #088395 50%, #FFE5B4 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Floating hearts animation */
+        .heart-float {
+            position: fixed;
+            font-size: 20px;
+            opacity: 0;
+            animation: float-up 8s infinite ease-in;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Wave animations */
+        .waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background-repeat: repeat-x;
+            animation: wave-animation 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        .wave:nth-child(2) {
+            animation: wave-animation 15s linear infinite reverse;
+            opacity: 0.2;
+        }
+
+        @keyframes wave-animation {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Decorative shells */
+        .shell-decoration {
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.15;
+            animation: gentle-float 6s ease-in-out infinite;
+        }
+
+        .shell-1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .shell-2 {
+            top: 30%;
+            right: 8%;
+            animation-delay: 2s;
+        }
+
+        .shell-3 {
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 4s;
+        }
+
+        @keyframes gentle-float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* Main card */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 60px 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: card-entrance 1s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes card-entrance {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Decorative corner elements */
+        .corner-decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+        }
+
+        .corner-top-left {
+            top: -20px;
+            left: -20px;
+            background: radial-gradient(circle, var(--coral) 0%, transparent 70%);
+        }
+
+        .corner-bottom-right {
+            bottom: -20px;
+            right: -20px;
+            background: radial-gradient(circle, var(--ocean-light) 0%, transparent 70%);
+        }
+
+        /* Typography */
+        .handwritten {
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 32px;
+            color: var(--ocean-deep);
+            margin-bottom: 20px;
+            animation: fade-in 1s ease-out 0.5s both;
+        }
+
+        .main-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--coral);
+            margin-bottom: 30px;
+            line-height: 1.2;
+            animation: fade-in 1s ease-out 0.8s both;
+        }
+
+        .location {
+            font-size: 24px;
+            color: var(--ocean-deep);
+            margin-bottom: 15px;
+            font-weight: 400;
+            animation: fade-in 1s ease-out 1.1s both;
+        }
+
+        .date {
+            font-size: 20px;
+            color: var(--ocean-light);
+            margin-bottom: 40px;
+            font-weight: 300;
+            animation: fade-in 1s ease-out 1.4s both;
+        }
+
+        .message {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fade-in 1s ease-out 1.7s both;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Answer buttons */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fade-in 1s ease-out 2s both;
+            position: relative;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 18px 50px;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--coral) 0%, var(--sunset) 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        .btn-no {
+            background: white;
+            color: var(--ocean-deep);
+            border: 3px solid var(--ocean-deep);
+            box-shadow: 0 8px 20px rgba(10, 77, 104, 0.2);
+            position: absolute;
+            transition: all 0.2s ease;
+        }
+
+        .btn-no:hover {
+            background: var(--ocean-deep);
+            color: white;
+        }
+
+        /* Photo link */
+        .photo-link {
+            margin-top: 30px;
+            animation: fade-in 1s ease-out 2.3s both;
+        }
+
+        .photo-link a {
+            color: var(--ocean-light);
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 2px solid var(--ocean-light);
+            transition: all 0.3s ease;
+            padding-bottom: 3px;
+        }
+
+        .photo-link a:hover {
+            color: var(--coral);
+            border-bottom-color: var(--coral);
+        }
+
+        /* Emoji decorations */
+        .emoji-decoration {
+            font-size: 40px;
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .card {
+                padding: 40px 30px;
+            }
+
+            .main-heading {
+                font-size: 40px;
+            }
+
+            .handwritten {
+                font-size: 24px;
+            }
+
+            .location {
+                font-size: 20px;
+            }
+
+            .date {
+                font-size: 18px;
+            }
+
+            .message {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 15px 35px;
+                font-size: 16px;
+            }
+
+            .shell-decoration {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts -->
+    <div class="heart-float" style="left: 10%; animation-delay: 0s;">💙</div>
+    <div class="heart-float" style="left: 30%; animation-delay: 2s;">❤️</div>
+    <div class="heart-float" style="left: 50%; animation-delay: 4s;">💖</div>
+    <div class="heart-float" style="left: 70%; animation-delay: 6s;">💙</div>
+    <div class="heart-float" style="left: 90%; animation-delay: 1s;">💕</div>
+
+    <!-- Wave decorations -->
+    <div class="waves">
+        <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none">
+            <path d="M0,50 C150,80 350,20 600,50 C850,80 1050,20 1200,50 L1200,100 L0,100 Z" fill="rgba(255, 255, 255, 0.3)"/>
+        </svg>
+        <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none">
+            <path d="M0,30 C200,60 400,0 600,30 C800,60 1000,0 1200,30 L1200,100 L0,100 Z" fill="rgba(255, 255, 255, 0.2)"/>
+        </svg>
+    </div>
+
+    <!-- Shell decorations -->
+    <div class="shell-decoration shell-1">🐚</div>
+    <div class="shell-decoration shell-2">🌺</div>
+    <div class="shell-decoration shell-3">🐚</div>
+
+    <!-- Main container -->
+    <div class="container">
+        <div class="card">
+            <div class="corner-decoration corner-top-left"></div>
+            <div class="corner-decoration corner-bottom-right"></div>
+
+            <p class="handwritten">Hey Loomi... ✨</p>
+            
+            <h1 class="main-heading">
+                Will You Be<br>My Valentine?
+            </h1>
+
+            <p class="location">
+                <span class="emoji-decoration">🌴</span>
+                Moalboal, Cebu
+                <span class="emoji-decoration">🌊</span>
+            </p>
+
+            <p class="date">February 14, 2026</p>
+
+            <p class="message">
+                I want to spend the most romantic day of the year with you,
+                exploring the beautiful beaches and creating memories together.
+                Let's watch the sunset, walk by the ocean, and celebrate our love
+                in paradise. 💙
+            </p>
+
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="handleYes()">
+                    Yes! 💖
+                </button>
+                <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">
+                    No 😢
+                </button>
+            </div>
+
+            <div class="photo-link">
+                <a href="photos.html">💕 See our memories together 💕</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const card = document.querySelector('.card');
+            const cardRect = card.getBoundingClientRect();
+            
+            // Get random position within the card
+            const maxX = cardRect.width - noBtn.offsetWidth - 100;
+            const maxY = 300; // Keep it in reasonable range
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY - 100;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            noClickCount++;
+            
+            // Change button text based on attempts
+            if (noClickCount === 1) {
+                noBtn.textContent = 'Are you sure? 🥺';
+            } else if (noClickCount === 2) {
+                noBtn.textContent = 'Really? 😢';
+            } else if (noClickCount === 3) {
+                noBtn.textContent = 'Please? 🙏';
+            } else if (noClickCount > 3) {
+                noBtn.textContent = 'Pretty please? 💙';
+            }
+        }
+
+        function handleYes() {
+            // Redirect to thank you page
+            window.location.href = 'thankyou.html';
+        }
+
+        function createConfettiHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.textContent = ['💖', '💕', '💙', '❤️', '💗'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Add more floating hearts periodically
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                createConfettiHeart();
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

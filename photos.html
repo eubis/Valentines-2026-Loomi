@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories Together 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --coral: #FF6B9D;
+            --ocean-deep: #0A4D68;
+            --ocean-light: #088395;
+            --sand: #FFE5B4;
+            --sunset: #FF9A76;
+            --shell: #FFF5E4;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, #0A4D68 0%, #088395 50%, #FFE5B4 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fade-in 1s ease-out;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 24px;
+            color: var(--sand);
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Photo grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            animation: card-entrance 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .photo-card:nth-child(1) { animation-delay: 0.1s; }
+        .photo-card:nth-child(2) { animation-delay: 0.2s; }
+        .photo-card:nth-child(3) { animation-delay: 0.3s; }
+        .photo-card:nth-child(4) { animation-delay: 0.4s; }
+        .photo-card:nth-child(5) { animation-delay: 0.5s; }
+        .photo-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes card-entrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Square aspect ratio */
+            background: linear-gradient(135deg, var(--ocean-light), var(--coral));
+            overflow: hidden;
+        }
+
+        .photo-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(8, 131, 149, 0.3));
+        }
+
+        .photo-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .photo-card:hover .photo-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .photo-caption {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .photo-caption p {
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 22px;
+            color: var(--ocean-deep);
+            line-height: 1.4;
+        }
+
+        /* Instructions */
+        .instructions {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fade-in 1s ease-out 0.3s both;
+        }
+
+        .instructions h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--coral);
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .instructions p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .instructions code {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: var(--ocean-deep);
+        }
+
+        /* Bottom CTA */
+        .bottom-cta {
+            text-align: center;
+            margin-top: 60px;
+            animation: fade-in 1s ease-out 0.6s both;
+        }
+
+        .bottom-cta p {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--coral) 0%, var(--sunset) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .instructions {
+                padding: 20px;
+            }
+
+            .instructions h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-link">← Back to invitation</a>
+            <h1>Our Memories Together 💕</h1>
+            <p>Every moment with you is special...</p>
+        </div>
+
+        <!-- <div class="instructions">
+            <h2>📸 How to Add Your Photos</h2>
+            <p>
+                To add your photos, save your images with these names: <code>photo1.jpg</code>, <code>photo2.jpg</code>, 
+                <code>photo3.jpg</code>, <code>photo4.jpg</code>, <code>photo5.jpg</code>, and <code>photo6.jpg</code><br>
+                Then place them in the same folder as this HTML file. Update the captions below in the code to describe each photo!
+            </p>
+        </div> -->
+
+        <div class="photo-grid">
+            <div class="photo-card">
+                <div class="photo-wrapper">
+                    <div class="photo-placeholder">📷</div>
+                    <img src="photo1.jpg" alt="My Birthday, you made it memorable.">
+                   
+                </div>
+                <div class="photo-caption">
+                    <p>My Birthday, you made it memorable.</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-wrapper">
+                    <div class="photo-placeholder">💑</div>
+                    <img src="photo2.jpg" alt="We didn't got to enjoy the rides but thanks for being always my ride.">
+                   
+                </div>
+                <div class="photo-caption">
+                    <p>We didn't get to enjoy the rides but thanks for being always my ride.</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-wrapper">
+                    <div class="photo-placeholder">❤️</div>
+                    <img src="photo3.jpg" alt="Your Birthday, we were official.">
+                   
+                </div>
+                <div class="photo-caption">
+                    <p>Your Birthday, we were official.</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-wrapper">
+                    <div class="photo-placeholder">🌊</div>
+                    <img src="photo4.jpg" alt="You are as sweet as the cake we made.">
+                   
+                </div>
+                <div class="photo-caption">
+                    <p>You are as sweet as the cake we made.</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-wrapper">
+                    <div class="photo-placeholder">💕</div>
+                    <img src="photo5.jpg" alt="I always smile wiht you.">
+                   
+                </div>
+                <div class="photo-caption">
+                    <p>I always smile with you.</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-wrapper">
+                    <div class="photo-placeholder">✨</div>
+                    <img src="photo6.jpg" alt="Thank you for the sweetest stare.">
+                   
+                </div>
+                <div class="photo-caption">
+                    <p>Thank you for the sweetest stare.💙</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-cta">
+            <p>So... what do you say? 💕</p>
+            <a href="index.html" class="btn-back">Answer the question 💖</a>
+        </div>
+    </div>
+</body>
+</html>
