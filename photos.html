@@ -25,327 +25,412 @@
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(180deg, #0A4D68 0%, #088395 50%, #FFE5B4 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            overflow-x: hidden; /* Prevent scrollbar from 3D elements */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
+        /* Floating Hearts Background Animation */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            background-color: rgba(255, 255, 255, 0.2);
+            clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 80%, 18% 100%, 0% 35%);
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container & Header */
         .container {
+            width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 60px;
-            animation: fade-in 1s ease-out;
+            margin: 30px 0 60px;
+            animation: fade-down 1.2s ease-out;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 1.8rem;
+            color: var(--sand);
         }
 
         .back-link {
             display: inline-block;
             margin-bottom: 20px;
-            color: white;
+            color: rgba(255,255,255,0.8);
             text-decoration: none;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 25px;
-            border-radius: 25px;
-            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            background: rgba(0,0,0,0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: 0.3s;
         }
+        .back-link:hover { background: rgba(255,255,255,0.2); color: white; }
 
-        .back-link:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateX(-5px);
-        }
-
-        .header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            color: white;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .header p {
-            font-family: 'Covered By Your Grace', cursive;
-            font-size: 24px;
-            color: var(--sand);
-        }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Photo grid */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .photo-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-            animation: card-entrance 0.8s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .photo-card:nth-child(1) { animation-delay: 0.1s; }
-        .photo-card:nth-child(2) { animation-delay: 0.2s; }
-        .photo-card:nth-child(3) { animation-delay: 0.3s; }
-        .photo-card:nth-child(4) { animation-delay: 0.4s; }
-        .photo-card:nth-child(5) { animation-delay: 0.5s; }
-        .photo-card:nth-child(6) { animation-delay: 0.6s; }
-
-        @keyframes card-entrance {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .photo-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .photo-wrapper {
+        /* 3D CAROUSEL STYLES */
+        .carousel-container {
             position: relative;
-            width: 100%;
-            padding-bottom: 100%; /* Square aspect ratio */
-            background: linear-gradient(135deg, var(--ocean-light), var(--coral));
-            overflow: hidden;
+            width: 320px; /* Card Width */
+            height: 450px; /* Card Height including text */
+            margin: 0 auto;
+            perspective: 1000px; /* Gives the 3D depth */
+            margin-top: 40px;
         }
 
-        .photo-placeholder {
+        .carousel {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(8, 131, 149, 0.3));
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); /* Smooth rotation */
         }
 
-        .photo-wrapper img {
+        .card {
             position: absolute;
-            top: 0;
+            width: 320px;
+            height: 420px;
             left: 0;
+            top: 0;
+            background: white;
+            padding: 15px 15px 25px 15px;
+            border-radius: 15px; /* Polaroid style */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* The rotation for individual items is handled by JS */
+            backface-visibility: hidden; /* Hide back of cards */
+            opacity: 0.9;
+            transition: opacity 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        /* Make the front-facing card brighter */
+        .card:hover {
+            opacity: 1;
+            box-shadow: 0 20px 50px rgba(255, 107, 157, 0.4);
+        }
+
+        .img-wrapper {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #f0f0f0;
+            position: relative;
+        }
+
+        .img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
         }
 
-        .photo-card:hover .photo-wrapper img {
-            transform: scale(1.1);
-        }
-
-        .photo-caption {
-            padding: 20px;
+        .caption {
+            margin-top: 20px;
             text-align: center;
         }
 
-        .photo-caption p {
+        .caption p {
             font-family: 'Covered By Your Grace', cursive;
-            font-size: 22px;
+            font-size: 1.6rem;
             color: var(--ocean-deep);
-            line-height: 1.4;
+            line-height: 1.2;
         }
 
-        /* Instructions */
-        .instructions {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: fade-in 1s ease-out 0.3s both;
+        /* Navigation Controls */
+        .controls {
+            margin-top: 80px;
+            display: flex;
+            gap: 40px;
+            z-index: 10;
         }
 
-        .instructions h2 {
-            font-family: 'Playfair Display', serif;
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn:hover {
+            background: white;
             color: var(--coral);
-            margin-bottom: 15px;
-            font-size: 28px;
-        }
-
-        .instructions p {
-            color: #555;
-            line-height: 1.8;
-            font-size: 16px;
-        }
-
-        .instructions code {
-            background: #f5f5f5;
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-family: monospace;
-            color: var(--ocean-deep);
+            transform: scale(1.1);
         }
 
         /* Bottom CTA */
         .bottom-cta {
             text-align: center;
             margin-top: 60px;
-            animation: fade-in 1s ease-out 0.6s both;
-        }
-
-        .bottom-cta p {
-            font-size: 24px;
-            color: white;
-            margin-bottom: 20px;
-            font-family: 'Playfair Display', serif;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fade-up 1s ease-out 1s forwards;
         }
 
         .btn-back {
             display: inline-block;
-            padding: 18px 50px;
-            background: linear-gradient(135deg, var(--coral) 0%, var(--sunset) 100%);
-            color: white;
+            padding: 15px 40px;
+            background: white;
+            color: var(--coral);
             text-decoration: none;
             border-radius: 50px;
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
         }
 
         .btn-back:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.6);
+            transform: translateY(-5px);
+            background: var(--coral);
+            color: white;
+            box-shadow: 0 15px 30px rgba(255, 107, 157, 0.4);
         }
 
-        /* Responsive */
+        @keyframes fade-down {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 36px;
+            .carousel-container {
+                width: 260px; /* Smaller cards on mobile */
+                height: 380px;
+                perspective: 800px;
             }
-
-            .photo-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
+            .card {
+                width: 260px;
+                height: 350px;
             }
-
-            .instructions {
-                padding: 20px;
+            .img-wrapper {
+                height: 220px;
             }
-
-            .instructions h2 {
-                font-size: 24px;
-            }
+            .header h1 { font-size: 2.5rem; }
+            .carousel-container { margin-top: 20px; }
+            .controls { margin-top: 60px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="hearts-bg" id="hearts-container"></div>
+
     <div class="container">
         <div class="header">
             <a href="index.html" class="back-link">← Back to invitation</a>
-            <h1>Our Memories Together 💕</h1>
-            <p>Every moment with you is special...</p>
+            <h1>Our Memories 💕</h1>
+            <p>Spin the carousel of love...</p>
         </div>
 
-        <!-- <div class="instructions">
-            <h2>📸 How to Add Your Photos</h2>
-            <p>
-                To add your photos, save your images with these names: <code>photo1.jpg</code>, <code>photo2.jpg</code>, 
-                <code>photo3.jpg</code>, <code>photo4.jpg</code>, <code>photo5.jpg</code>, and <code>photo6.jpg</code><br>
-                Then place them in the same folder as this HTML file. Update the captions below in the code to describe each photo!
-            </p>
-        </div> -->
+        <div class="carousel-container">
+            <div class="carousel" id="carousel">
+                
+                <div class="card">
+                    <div class="img-wrapper">
+                        <img src="photo1.jpg" alt="Memory 1">
+                    </div>
+                    <div class="caption">
+                        <p>My Birthday, you made it memorable.</p>
+                    </div>
+                </div>
 
-        <div class="photo-grid">
-            <div class="photo-card">
-                <div class="photo-wrapper">
-                    <div class="photo-placeholder">📷</div>
-                    <img src="photo1.jpg" alt="My Birthday, you made it memorable.">
-                   
+                <div class="card">
+                    <div class="img-wrapper">
+                        <img src="photo2.jpg" alt="Memory 2">
+                    </div>
+                    <div class="caption">
+                        <p>Thanks for always being my ride.</p>
+                    </div>
                 </div>
-                <div class="photo-caption">
-                    <p>My Birthday, you made it memorable.</p>
-                </div>
-            </div>
 
-            <div class="photo-card">
-                <div class="photo-wrapper">
-                    <div class="photo-placeholder">💑</div>
-                    <img src="photo2.jpg" alt="We didn't got to enjoy the rides but thanks for being always my ride.">
-                   
+                <div class="card">
+                    <div class="img-wrapper">
+                        <img src="photo3.jpg" alt="Memory 3">
+                    </div>
+                    <div class="caption">
+                        <p>Your Birthday, we became official.</p>
+                    </div>
                 </div>
-                <div class="photo-caption">
-                    <p>We didn't get to enjoy the rides but thanks for being always my ride.</p>
-                </div>
-            </div>
 
-            <div class="photo-card">
-                <div class="photo-wrapper">
-                    <div class="photo-placeholder">❤️</div>
-                    <img src="photo3.jpg" alt="Your Birthday, we were official.">
-                   
+                <div class="card">
+                    <div class="img-wrapper">
+                        <img src="photo4.jpg" alt="Memory 4">
+                    </div>
+                    <div class="caption">
+                        <p>You are as sweet as the cake.</p>
+                    </div>
                 </div>
-                <div class="photo-caption">
-                    <p>Your Birthday, we were official.</p>
-                </div>
-            </div>
 
-            <div class="photo-card">
-                <div class="photo-wrapper">
-                    <div class="photo-placeholder">🌊</div>
-                    <img src="photo4.jpg" alt="You are as sweet as the cake we made.">
-                   
+                <div class="card">
+                    <div class="img-wrapper">
+                        <img src="photo5.jpg" alt="Memory 5">
+                    </div>
+                    <div class="caption">
+                        <p>I always smile with you.</p>
+                    </div>
                 </div>
-                <div class="photo-caption">
-                    <p>You are as sweet as the cake we made.</p>
-                </div>
-            </div>
 
-            <div class="photo-card">
-                <div class="photo-wrapper">
-                    <div class="photo-placeholder">💕</div>
-                    <img src="photo5.jpg" alt="I always smile wiht you.">
-                   
+                <div class="card">
+                    <div class="img-wrapper">
+                        <img src="photo6.jpg" alt="Memory 6">
+                    </div>
+                    <div class="caption">
+                        <p>Thank you for the sweetest stare. 💙</p>
+                    </div>
                 </div>
-                <div class="photo-caption">
-                    <p>I always smile with you.</p>
-                </div>
-            </div>
 
-            <div class="photo-card">
-                <div class="photo-wrapper">
-                    <div class="photo-placeholder">✨</div>
-                    <img src="photo6.jpg" alt="Thank you for the sweetest stare.">
-                   
-                </div>
-                <div class="photo-caption">
-                    <p>Thank you for the sweetest stare.💙</p>
-                </div>
             </div>
+        </div>
+
+        <div class="controls">
+            <button class="nav-btn" onclick="rotateCarousel(-1)">❮</button>
+            <button class="nav-btn" onclick="rotateCarousel(1)">❯</button>
         </div>
 
         <div class="bottom-cta">
-            <p>So... what do you say? 💕</p>
+            <p style="color: white; font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 20px;">Ready for the next chapter?</p>
             <a href="index.html" class="btn-back">Answer the question 💖</a>
         </div>
     </div>
+
+    <script>
+        // --- 3D Carousel Logic ---
+        const carousel = document.getElementById('carousel');
+        const cards = document.querySelectorAll('.card');
+        const numCards = cards.length;
+        
+        // 360 degrees divided by number of cards gives the angle between them
+        const theta = 360 / numCards;
+        
+        // Calculate the distance from center (radius) based on card width
+        // This math ensures the cards sit in a perfect polygon
+        let radius = Math.round((340 / 2) / Math.tan(Math.PI / numCards));
+        
+        // Adjust radius for mobile
+        if(window.innerWidth < 768) {
+            radius = Math.round((260 / 2) / Math.tan(Math.PI / numCards));
+        }
+
+        let currIndex = 0;
+
+        function setupCarousel() {
+            cards.forEach((card, index) => {
+                const angle = theta * index;
+                // Arrange cards in a circle and point them outward
+                card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+                
+                // Allow clicking a card to rotate to it
+                card.onclick = () => {
+                    // Calculate how far away this card is from current view
+                    const diff = index - (currIndex % numCards);
+                    rotateCarousel(diff);
+                };
+            });
+        }
+
+        function rotateCarousel(dir) {
+            currIndex += dir;
+            // Rotate the entire carousel container
+            const angle = theta * currIndex * -1;
+            carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
+        }
+
+        setupCarousel();
+
+        // Re-calculate on resize
+        window.addEventListener('resize', () => {
+            if(window.innerWidth < 768) {
+                radius = Math.round((260 / 2) / Math.tan(Math.PI / numCards));
+            } else {
+                radius = Math.round((340 / 2) / Math.tan(Math.PI / numCards));
+            }
+            setupCarousel();
+            // Re-apply current rotation
+            const angle = theta * currIndex * -1;
+            carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
+        });
+
+
+        // --- Floating Hearts Background Logic ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // Random Size
+            const size = Math.random() * 20 + 10 + 'px';
+            heart.style.width = size;
+            heart.style.height = size;
+            
+            // Random Position
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // Random Animation Duration
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            
+            document.getElementById('hearts-container').appendChild(heart);
+            
+            // Remove after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Create a heart every 300ms
+        setInterval(createHeart, 300);
+
+    </script>
 </body>
 </html>
